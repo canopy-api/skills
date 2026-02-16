@@ -1,3 +1,8 @@
+---
+name: amazon-data
+description: Retrieve Amazon product data including pricing, reviews, sales estimates, stock levels, search results, deals, and more via the Canopy API REST endpoints using Python.
+---
+
 # Amazon Data Skill
 
 Use this skill to retrieve Amazon product data via the Canopy API REST endpoints using Python.
