@@ -11,12 +11,17 @@ Skills are reusable prompt-driven modules that give AI agents structured capabil
 - [canopy-api](https://github.com/canopy-api/canopy-api) — Documentation and examples for the Canopy API
 - [canopy-api-mcp](https://github.com/canopy-api/canopy-api-mcp) — Model Context Protocol server for Canopy API
 
+## Installation
+
+```bash
+npx skills add canopy-api/skills
+```
+
 ## Getting Started
 
 1. Sign up and create an account at [canopyapi.co](https://canopyapi.co)
 2. Get an API key from your dashboard
-3. Browse the available skills in this repo
-4. Add them to your agent or coding assistant configuration
+3. Install the skills with `npx skills add canopy-api/skills`
 
 ## API Endpoints
 
