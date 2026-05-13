@@ -1,6 +1,6 @@
 ---
 name: amazon-data
-description: Retrieve Amazon product data including pricing, reviews, sales estimates, stock levels, search results, deals, and more via the Canopy API REST endpoints using Python.
+description: Retrieve Amazon product data including pricing, reviews, sales estimates, stock levels, search results, deals, best sellers, and more via the Canopy API REST endpoints using Python.
 ---
 
 # Amazon Data Skill
@@ -17,6 +17,8 @@ Canopy API provides real-time access to 350M+ Amazon products across 25K+ catego
 - **Deals** — browse current Amazon deals and discounts across 12 international domains
 - **Categories** — navigate the full Amazon category taxonomy
 - **Sellers and authors** — look up seller profiles, ratings, and author bibliographies
+- **Best sellers** — top-ranked products across Amazon's category taxonomy
+- **Identifier conversion** — translate between ASINs and GTINs (ISBN/UPC/EAN)
 
 ## Setup
 
@@ -60,6 +62,24 @@ response = requests.get(f"{BASE_URL}/api/amazon/product", headers=HEADERS, param
 
 Returns product title, brand, price, rating, images, feature bullets, categories, and seller info.
 
+### Convert ASIN to GTIN
+
+```python
+response = requests.get(f"{BASE_URL}/api/amazon/product/gtin-from-asin", headers=HEADERS, params={
+    "asin": "B01HY0JA3G",
+    "domain": "US",  # optional
+})
+```
+
+### Convert GTIN to ASIN
+
+```python
+response = requests.get(f"{BASE_URL}/api/amazon/product/asin-from-gtin", headers=HEADERS, params={
+    "gtin": "9780141036144",
+    "domain": "US",  # optional
+})
+```
+
 ### Get Product Variants
 
 ```python
@@ -91,6 +111,10 @@ Returns weekly, monthly, and annual unit sales estimates.
 ```python
 response = requests.get(f"{BASE_URL}/api/amazon/product/reviews", headers=HEADERS, params={
     "asin": "B01HY0JA3G",
+    "page": 1,                       # optional
+    "onlyVerifiedReviews": True,     # optional
+    "rating": "5",                   # optional, filter by star rating
+    "search": "battery life",        # optional, filter by search term
 })
 ```
 
@@ -109,6 +133,7 @@ response = requests.get(f"{BASE_URL}/api/amazon/product/offers", headers=HEADERS
 response = requests.get(f"{BASE_URL}/api/amazon/search", headers=HEADERS, params={
     "searchTerm": "wireless headphones",
     "domain": "US",          # optional
+    "categoryId": "172282",  # optional, filter to a category
     "page": 1,               # optional
     "limit": 20,             # optional, 20-40
     "minPrice": 10,          # optional
@@ -123,6 +148,8 @@ response = requests.get(f"{BASE_URL}/api/amazon/search", headers=HEADERS, params
 ```python
 response = requests.get(f"{BASE_URL}/api/amazon/autocomplete", headers=HEADERS, params={
     "searchTerm": "wireless",
+    "domain": "US",        # optional
+    "category": "aps",     # optional, Amazon autocomplete_alias (e.g. "electronics")
 })
 ```
 
@@ -169,11 +196,36 @@ response = requests.get(f"{BASE_URL}/api/amazon/author", headers=HEADERS, params
 
 ```python
 response = requests.get(f"{BASE_URL}/api/amazon/deals", headers=HEADERS, params={
-    "domain": "US",  # optional: US, UK, CA, DE, FR, IT, ES, AU, IN, MX, BR, JP
-    "page": 1,       # optional
-    "limit": 20,     # optional
+    "domain": "US",                       # optional
+    "page": 1,                            # optional
+    "limit": 20,                          # optional
+    "categoryIds": "3760911,172282",      # optional, comma-separated category IDs
 })
 ```
+
+### Get Best Sellers
+
+```python
+response = requests.get(f"{BASE_URL}/api/amazon/bestsellers", headers=HEADERS, params={
+    "categoryId": "bestsellers_amazon_devices",  # required if url not provided
+    # "url": "https://www.amazon.com/Best-Sellers/zgbs",  # required if categoryId not provided
+    "domain": "US",  # optional
+    "page": 1,       # optional
+    "limit": 50,     # optional, typically 20-50 per page
+})
+```
+
+Returns ranked products with rank position, ratings, and category navigation info.
+
+### Get Best Seller Categories
+
+```python
+response = requests.get(f"{BASE_URL}/api/amazon/bestseller-categories", headers=HEADERS, params={
+    "domain": "US",  # optional
+})
+```
+
+Returns top-level best seller category IDs (e.g. `bestsellers_amazon_devices`) to feed into `/api/amazon/bestsellers`.
 
 ## Product Lookup Options
 
@@ -187,7 +239,7 @@ Product endpoints accept one of these identifiers:
 
 ## Supported Domains
 
-US (default), UK, CA, DE, FR, IT, ES, AU, IN, MX, BR, JP
+US (default), UK, CA, DE, FR, IT, ES, AU, IN, MX, BR, JP, PL
 
 ## Error Handling
 
