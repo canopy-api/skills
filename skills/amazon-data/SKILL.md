@@ -1,11 +1,25 @@
 ---
 name: amazon-data
-description: Retrieve Amazon product data including pricing, reviews, sales estimates, stock levels, search results, deals, best sellers, and more via the Canopy API REST endpoints using Python.
+description: "Use when the user needs Amazon product data, ASIN lookup, product search, prices, reviews, seller offers, sales estimates, stock levels, deals, or best sellers. Retrieve real-time Amazon data with Canopy API REST endpoints using Python for ecommerce research and product comparison."
 ---
 
-# Amazon Data Skill
+# Amazon Product Data API — Canopy
 
-Use this skill to retrieve Amazon product data via the Canopy API REST endpoints using Python.
+Use this skill to retrieve real-time Amazon product data with the Canopy API REST endpoints using Python. API reference: [Canopy API documentation](https://docs.canopyapi.co).
+
+## When to use
+
+Use this skill when the task is one of these:
+
+- **ASIN lookup** — product details from an ASIN, Amazon product URL, or GTIN (ISBN, UPC, or EAN)
+- **Product search** — keyword search with price, condition, category, and sort filters
+- **Price and review checks** — current price, star rating, review text, and verified-purchase status
+- **Seller offers** — compare price and fulfillment across sellers, or look up a seller profile
+- **Sales estimates** — weekly, monthly, and annual unit sales
+- **Stock levels** — current stock estimates for a product
+- **Deals** — current Amazon deals and discounts
+- **Best sellers** — top-ranked products in a category
+- **Product comparison** — side-by-side prices, ratings, and offers for ecommerce research
 
 Canopy API provides real-time access to 350M+ Amazon products across 25K+ categories. With this skill you can fetch:
 
